@@ -14,7 +14,6 @@ export default function YouTubeEmbedder() {
         setVideoId(videoIdParam);
         setEmbedUrl(`https://www.youtube.com/embed/${videoIdParam}`);
       } else if (url.includes("youtu.be/")) {
-        // Handle short links
         const videoIdShort = url.split("youtu.be/")[1]?.split("?")[0];
         if (videoIdShort) {
           setVideoId(videoIdShort);
@@ -31,33 +30,35 @@ export default function YouTubeEmbedder() {
   };
 
   return (
-    <div className="flex flex-col items-center bg-gray-900 p-8 rounded-2xl shadow-lg w-full max-w-2xl">
-      <h2 className="text-xl font-semibold mb-4">Preview a YouTube Video</h2>
+    <div className="flex flex-col items-center bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 p-10 rounded-2xl shadow-2xl w-full max-w-3xl border border-gray-800">
+      <h2 className="text-3xl font-bold mb-6 text-white tracking-tight">
+        🎬 YouTube Preview & Download
+      </h2>
 
-      <form onSubmit={handleSubmit} className="flex gap-2 mb-6 w-full">
+      <form onSubmit={handleSubmit} className="flex gap-3 mb-8 w-full">
         <input
           type="text"
           placeholder="Paste YouTube link here..."
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          className="flex-grow border border-gray-700 bg-gray-800 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="flex-grow border border-gray-700 bg-gray-800 text-gray-100 placeholder-gray-500 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
         />
         <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors"
+          className="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
         >
           Preview
         </button>
       </form>
 
       {embedUrl && (
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-6 w-full">
           <iframe
-            width="560"
-            height="315"
+            width="640"
+            height="360"
             src={embedUrl}
             title="YouTube video player"
-            className="rounded-xl border border-gray-700"
+            className="rounded-xl border border-gray-700 shadow-lg"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
@@ -66,9 +67,9 @@ export default function YouTubeEmbedder() {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg transition-colors"
+            className="bg-green-600 hover:bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
           >
-            Download
+            ⬇️ Download
           </a>
         </div>
       )}
