@@ -1,11 +1,12 @@
 import { useState, type SyntheticEvent } from "react";
 
+
 export default function YouTubeEmbedder() {
   const [url, setUrl] = useState("");
   const [embedUrl, setEmbedUrl] = useState("");
   const [videoId, setVideoId] = useState("");
   const [quality, setQuality] = useState("720p");
-  const [format, setFormat] = useState("mp4"); 
+  const API_URL = "http://127.0.0.1:5000/download";
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -34,17 +35,15 @@ export default function YouTubeEmbedder() {
   const handleCancelPreview = () => {
     setEmbedUrl("");
     setVideoId("");
-    setFormat("mp4");
     setQuality("720p");
   };
 
   const handleDownload = () => {
     if (!videoId) return;
 
-    const backendUrl = new URL("http://127.0.0.1:5000/download");
+    const backendUrl = new URL(API_URL);
     backendUrl.searchParams.append("link", url);
     backendUrl.searchParams.append("quality", quality);
-    backendUrl.searchParams.append("format", format);
 
     window.open(backendUrl.toString(), "_blank");
   };
@@ -83,7 +82,7 @@ export default function YouTubeEmbedder() {
             allowFullScreen
           ></iframe>
 
-          <div className="flex flex-col md:flex-row items-center gap-4 mt-4">
+          <div className="flex flex-col md:flex-row items-center gap-4 mt-4 w-full justify-center">
             <div className="flex items-center gap-2">
               <label htmlFor="quality" className="text-gray-300 font-medium">
                 Quality:
@@ -101,27 +100,12 @@ export default function YouTubeEmbedder() {
               </select>
             </div>
 
-            <div className="flex items-center gap-2">
-              <label htmlFor="format" className="text-gray-300 font-medium">
-                Format:
-              </label>
-              <select
-                id="format"
-                value={format}
-                onChange={(e) => setFormat(e.target.value)}
-                className="bg-gray-800 border border-gray-700 text-gray-100 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="mp4">MP4</option>
-                <option value="mp3">MP3</option>
-              </select>
-            </div>
-
             <div className="flex gap-3">
               <button
                 onClick={handleDownload}
                 className="bg-green-600 hover:bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
               >
-                ⬇️ Download ({quality}, {format})
+                ⬇️ Download ({quality})
               </button>
 
               <button
