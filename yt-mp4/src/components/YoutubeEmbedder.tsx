@@ -48,22 +48,22 @@ export default function YouTubeEmbedder() {
   };
 
   return (
-    <div className="flex flex-col items-center bg-white p-10 rounded-2xl shadow-xl w-full max-w-3xl border border-gray-200">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800 tracking-tight">
+    <div className="flex flex-col items-center w-full max-w-3xl p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 transition-colors duration-500">
+      <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100 tracking-tight">
         🎬 YouTube Preview & Download
       </h2>
 
-      <form onSubmit={handleSubmit} className="flex gap-3 mb-8 w-full">
+      <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3 mb-8 w-full">
         <input
           type="text"
           placeholder="Paste YouTube link here..."
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          className="flex-grow border border-gray-300 bg-gray-50 text-gray-800 placeholder-gray-400 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
+          className="flex-grow border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-400 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 shadow-sm transition-colors duration-300"
         />
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-400 text-white font-medium px-6 py-3 rounded-lg shadow transition-transform transform hover:scale-105"
+          className="bg-blue-500 dark:bg-blue-600 hover:bg-blue-400 dark:hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-lg shadow transition-transform transform hover:scale-105"
         >
           Preview
         </button>
@@ -76,21 +76,21 @@ export default function YouTubeEmbedder() {
             height="360"
             src={embedUrl}
             title="YouTube video player"
-            className="rounded-xl border border-gray-300 shadow-lg"
+            className="rounded-xl border border-gray-300 dark:border-gray-600 shadow-lg transition-colors duration-300"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
 
           <div className="flex flex-col md:flex-row items-center gap-4 mt-4 w-full justify-center">
             <div className="flex items-center gap-2">
-              <label htmlFor="quality" className="text-gray-700 font-medium">
+              <label htmlFor="quality" className="text-gray-700 dark:text-gray-200 font-medium">
                 Quality:
               </label>
               <select
                 id="quality"
                 value={quality}
                 onChange={(e) => setQuality(e.target.value)}
-                className="bg-gray-50 border border-gray-300 text-gray-800 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 transition-colors duration-300"
               >
                 <option value="360p">360p</option>
                 <option value="480p">480p</option>
@@ -99,17 +99,17 @@ export default function YouTubeEmbedder() {
               </select>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex flex-col md:flex-row gap-3 mt-3 md:mt-0">
               <button
                 onClick={handleDownload}
-                className="bg-green-500 hover:bg-green-400 text-white font-semibold px-6 py-3 rounded-lg shadow transition-transform transform hover:scale-105"
+                className="bg-green-500 dark:bg-green-600 hover:bg-green-400 dark:hover:bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow transition-transform transform hover:scale-105"
               >
                 ⬇️ Download ({quality})
               </button>
 
               <button
                 onClick={handleCancelPreview}
-                className="bg-red-500 hover:bg-red-400 text-white font-semibold px-6 py-3 rounded-lg shadow transition-transform transform hover:scale-105"
+                className="bg-red-500 dark:bg-red-600 hover:bg-red-400 dark:hover:bg-red-500 text-white font-semibold px-6 py-3 rounded-lg shadow transition-transform transform hover:scale-105"
               >
                 ❌ Cancel Preview
               </button>
