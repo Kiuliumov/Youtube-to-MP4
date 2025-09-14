@@ -5,7 +5,7 @@ export default function YouTubeEmbedder() {
 	const [embedUrl, setEmbedUrl] = useState("");
 	const [videoId, setVideoId] = useState("");
 	const [quality, setQuality] = useState("720p");
-    console.log(videoId);
+	console.log(videoId);
 	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
 
@@ -36,34 +36,32 @@ export default function YouTubeEmbedder() {
 		setQuality("720p");
 	};
 
-	const handleDownload = async () => {
-		if (!url) return;
+	const handleDownload = () => {
+		if (!url) return alert("No video URL provided");
 
-		try {
-			const backendUrl = new URL("http://localhost:5000/download");
-			backendUrl.searchParams.append("link", url);
-			backendUrl.searchParams.append("quality", quality);
+		let normalizedUrl = url.trim();
 
-			const response = await fetch(backendUrl.toString());
-
-			if (!response.ok) {
-				throw new Error("Failed to download video");
-			}
-
-			const blob = await response.blob();
-			const blobUrl = URL.createObjectURL(blob);
-
-			const a = document.createElement("a");
-			a.href = blobUrl;
-			a.download = "video.mp4";
-			document.body.appendChild(a);
-			a.click();
-			a.remove();
-
-			URL.revokeObjectURL(blobUrl);
-		} catch (err) {
-			console.error("Download failed:", err);
+		if (!/^https?:\/\//i.test(normalizedUrl)) {
+			normalizedUrl = "https://" + normalizedUrl;
 		}
+
+		if (normalizedUrl.includes("youtu.be/")) {
+			const videoId = normalizedUrl.split("youtu.be/")[1]?.split("?")[0];
+			if (!videoId) return alert("Invalid YouTube link");
+			normalizedUrl = `https://www.youtube.com/watch?v=${videoId}`;
+		}
+
+		if (normalizedUrl.includes("youtube.com/watch")) {
+			const videoId = new URL(normalizedUrl).searchParams.get("v");
+			if (!videoId) return alert("Invalid YouTube link");
+			normalizedUrl = `https://www.youtube.com/watch?v=${videoId}`;
+		}
+
+		console.log("Sending to backend:", normalizedUrl);
+
+		// window.location.href = `http://localhost:5000/download?link=${encodeURIComponent(
+		// 	normalizedUrl
+		// )}&quality=${quality}`;
 	};
 
 	return (
